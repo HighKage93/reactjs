@@ -14,4 +14,9 @@ const router = createBrowserRouter([
     }
 ])
 
+// eslint-disable-next-line no-unused-vars
+const ProtectedRoute = () => {
+    return (null)
+}
+
 export default router
