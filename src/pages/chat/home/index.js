@@ -1,10 +1,13 @@
 // import { Card } from 'antd'
 
 import { Button, Card, Input } from "antd"
-import ChatServices from "../../services/chat"
+import ChatServices from "../../../services/chat"
 
 const Home = () => {
     const services = new ChatServices()
+    const onClick = () => {
+        console.log('button clicked', services)
+    }
     return (
         <div className="container-fluid">
             <div className='row' style={{height: '100%'}}>
@@ -22,7 +25,13 @@ const Home = () => {
                             <Input type="text" placeholder="Enter Message" />
                         </div>
                         <div className="col-3 justify-content-center">
-                            <Button type="primary" className="ml-4" onClick={()=>{services.getUsers()}}>Send</Button>
+                            <Button 
+                                type="primary" 
+                                className="ml-4"
+                                onClick={()=>onClick()}
+                            >
+                                Send
+                            </Button>
                         </div>
                     </div>
                     </Card>
