@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 // import { lazy } from "react";
 import Auth from "../src/pages/auth/index";
 import Home from "../src/pages/home/index";
+import CHome from "../src/pages/chat/home/index";
 
 const router = createBrowserRouter([
     {
@@ -11,6 +12,10 @@ const router = createBrowserRouter([
     {
       path: '/home',
       element: <Home />
+    },
+    {
+      path: '/chat/home',
+      element: <CHome />
     }
 ])
 
