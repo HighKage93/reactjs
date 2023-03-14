@@ -15,22 +15,24 @@ const Home = () => {
         console.log('button clicked', res);
         console.log('sent message, ', message)
         socket.emit('message', message);
+        setMessageList([...messList, {check: true, message}])
     }
     let newSocket=null
     useEffect(() => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         newSocket=io("http://localhost:8001");
         setSocket(newSocket);
+        newSocket.emit('new-connection', {users: []});
     }, [setSocket])
     const messageListner = (mes) => {
         console.log(mes, ' socket fetched message ')
-        setMessageList([...messList, mes])
+        setMessageList([...messList, {check: false, message: mes}])
     }
     useEffect(() => {
         socket?.on("message", messageListner)
         return () => {
             socket?.off("message", messageListner)
-        }
+        };
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [messageListner])
     return (
@@ -61,8 +63,9 @@ const Home = () => {
                     </div>
                     <div>
                         {messList?.map((element, index)=>{
+                            console.log(element)
                             return (
-                                <p key={index}>{element}</p>
+                                <p className={element.check ? 'd-flex justify-content-end' : 'd-flex justify content-start'} key={index}>{element?.message}</p>
                             )
                         })}
                     </div>
