@@ -1,15 +1,37 @@
 import { Modal, Form, Input, Button, Select } from "antd"
 import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import actions from "../../redux/auth/actions";
+import vaction from '../../redux/videos/actions'
 
 const Auth = () => {
-    const [form] = Form.useForm()
+    const dispatch = useDispatch();
+    const [form] = Form.useForm();
     const onFinish = () => {}
     const [view, setView] = useState(false);
     const onfinish = () => {
         const formdata = form.getFieldsValue();
-        console.log(formdata, ' formdata')
+        dispatch({
+            type: actions.REGISTER,
+            payload: formdata,
+        })
+        dispatch({
+            type: vaction.GET_VIDEOS,
+            payload: formdata,
+        })
     }
+    const registerresponse = useSelector((state) => state.auth)
+    const videos = useSelector((state) => state.videos?.videosData)
+    useEffect(()=>{
+        console.log(videos, ' videos ')
+    }, [videos])
+    useEffect(()=>{
+        console.log(registerresponse)
+        if(registerresponse) {
+            console.log(registerresponse)
+        }
+    }, [registerresponse])
     return (
         <div className="container">
             <Form layout="vertical" form={form} onFinish={onFinish} requiredMark>
@@ -96,19 +118,8 @@ const Auth = () => {
                             <Select.Option value='store' key='store'>Store</Select.Option>
                         </Select>
                     </Form.Item>
-                    {form.getFieldsValue().role==='store' ? (
-                        <Form.Item
-                        label="Address"
-                        name="address"
-                    >
-                        <Input 
-                            type="text"
-                        />
-                    </Form.Item>
-                    ) : (null)}
-                    
                     <Button
-                        onClick={()=>onfinish(true)}
+                        onClick={()=>onfinish()}
                     >
                         Register
                     </Button>
